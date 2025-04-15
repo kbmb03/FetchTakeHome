@@ -6,35 +6,25 @@
 //
 
 import SwiftUI
-
-import SwiftUI
+import Foundation
 
 struct ContentView: View {
     @State private var recipes: [Recipe] = []
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Recipes")
-                    .bold()
-                    .font(.title)
-                    .padding(.top)
-
+        NavigationSplitView {
                 List(recipes, id: \.uuid) { recipe in
-                    NavigationLink(destination: RecipeView(recipe: recipe)) {
-                        VStack(alignment: .leading) {
-                            Text(recipe.name)
-                                .font(.headline)
-                                .padding(.vertical, 5)
-                            
-                        }
+                    NavigationLink { RecipeView(recipe: recipe)
+                    } label: {
+                        recipeRow(recipe: recipe)
                     }
                 }
-                .padding()
-            }
+                .navigationTitle("Recipes")
             .task {
                 await loadRecipes()
             }
+        } detail: {
+            Text("Select a recipe")
         }
     }
 
@@ -52,6 +42,10 @@ struct ContentView: View {
             print("other error")
         }
     }
+}
+
+#Preview {
+    ContentView()
 }
 
 struct RecipeView: View {
@@ -142,4 +136,16 @@ enum recipeError: Error {
     case invalidURL
     case invalidResponse
     case invalidData
+}
+
+struct recipeRow: View {
+    var recipe: Recipe
+    
+    var body: some View {
+        HStack {
+            Text(recipe.name)
+            
+            Spacer()
+        }
+    }
 }
