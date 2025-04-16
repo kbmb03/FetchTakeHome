@@ -78,7 +78,7 @@ struct Recipe: Decodable {
     let uuid : String
     let sourceUrl : String?
     let youtubeUrl : String?
-    
+
 }
 
 struct RecipeWrapper: Decodable {

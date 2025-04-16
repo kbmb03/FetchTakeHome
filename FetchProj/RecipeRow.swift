@@ -9,22 +9,37 @@ import Foundation
 import SwiftUI
 
 struct recipeRow: View {
-    var recipe: Recipe
+    let recipe: Recipe
     
     var body: some View {
+        
         HStack {
-            AsyncImage(url: URL(string: recipe.photoUrlSmall ?? "")) {
-                image in image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                Circle()
-                    .foregroundStyle(.secondary)
+            ImageView(url: recipe.photoUrlSmall ?? "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg")
+                .frame(width: 75, height: 75)
+            VStack(alignment: .leading) {
+                Text(recipe.name)
+                    .font(.headline)
             }
-            .frame(width: 80, height: 80)
-            Text(recipe.name)
-                .font(.title)
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+//        HStack {
+//            AsyncImage(url: URL(string: recipe.photoUrlSmall ?? "")) {
+//                image in image
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//            } placeholder: {
+//                Circle()
+//                    .foregroundStyle(.secondary)
+//            }
+//            .frame(width: 80, height: 80)
+//            Text(recipe.name)
+//                .font(.title)
+//            Spacer()
+//        }
     }
 }
+
+#Preview {
+    recipeRow(recipe: Recipe(cuisine: "American", name: "Burger", photoUrlLarge: nil, photoUrlSmall: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg", uuid: "ABC", sourceUrl: nil, youtubeUrl: nil))
+}
+
