@@ -14,16 +14,28 @@ class ImageLoadingViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     var cancellables = Set<AnyCancellable>()
+    let manager = RecipeModelFileManager.instance
     
     let urlString: String
+    let imageKey: String
     
-    init(url: String) {
+    init(url: String, key: String) {
         urlString = url
-        downloadImage()
+        imageKey = key
+        getImage()
+    }
+    
+    func getImage() {
+        if let savedImage = manager.get(key: imageKey) {
+            image = savedImage
+            print("gets saved image")
+        } else {
+            downloadImage()
+            print("Downloading Images")
+        }
     }
     
     func downloadImage() {
-        print("Downloading Images")
         isLoading = true
         
         guard let url = URL(string: urlString) else {
@@ -38,8 +50,12 @@ class ImageLoadingViewModel: ObservableObject {
             .sink { [weak self] (_) in
                 self?.isLoading = false
             } receiveValue: { [weak self] (returnedImage) in
-                self?.image = returnedImage
-                print("B")
+                guard let self = self,
+                      let image = returnedImage else {
+                    return
+                }
+                self.image = returnedImage
+                self.manager.add(key: self.imageKey, value: image)
             }
             .store(in: &cancellables)
     }

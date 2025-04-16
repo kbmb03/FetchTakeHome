@@ -14,7 +14,7 @@ struct recipeRow: View {
     var body: some View {
         
         HStack {
-            ImageView(url: recipe.photoUrlSmall ?? "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg")
+            ImageView(url: recipe.photoUrlSmall ?? "", key: recipe.uuid)
                 .frame(width: 75, height: 75)
             VStack(alignment: .leading) {
                 Text(recipe.name)
