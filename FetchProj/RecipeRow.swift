@@ -22,20 +22,6 @@ struct recipeRow: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-//        HStack {
-//            AsyncImage(url: URL(string: recipe.photoUrlSmall ?? "")) {
-//                image in image
-//                    .resizable()
-//                    .aspectRatio(contentMode: .fit)
-//            } placeholder: {
-//                Circle()
-//                    .foregroundStyle(.secondary)
-//            }
-//            .frame(width: 80, height: 80)
-//            Text(recipe.name)
-//                .font(.title)
-//            Spacer()
-//        }
     }
 }
 

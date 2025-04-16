@@ -70,21 +70,6 @@ func getRecipe() async throws -> [Recipe] {
     }
 }
 
-struct Recipe: Decodable {
-    let cuisine : String
-    let name : String
-    let photoUrlLarge : String?
-    let photoUrlSmall : String?
-    let uuid : String
-    let sourceUrl : String?
-    let youtubeUrl : String?
-
-}
-
-struct RecipeWrapper: Decodable {
-    let recipes: [Recipe]
-}
-
 enum recipeError: Error {
     case invalidURL
     case invalidResponse
