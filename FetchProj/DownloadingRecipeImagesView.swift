@@ -9,54 +9,35 @@ import SwiftUI
 
 struct DownloadingRecipeImagesView: View {
     @StateObject var vm = DownloadingImagesViewModel()
-
+    
+    @ViewBuilder
+    var mainContent: some View {
+        if let error = vm.error {
+            ErrorView(errorMessage: error.errorMessage)
+        } else if vm.dataArray.isEmpty {
+            EmptyDataView()
+        } else {
+            RecipeListView(recipes: vm.dataArray)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
-            Group {
-                if let error = vm.error {
-                    VStack {
-                        Spacer()
-                        Text(error.errorMessage)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                        Spacer()
-                    }
-                } else if vm.dataArray.isEmpty {
-                    VStack {
-                        Spacer()
-                        Text("Sorry, but no recipes are currently available. Please refresh or check again later.")
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                        Spacer()
-                    }
-                } else {
-                    List {
-                        ForEach(vm.dataArray, id: \.uuid) { model in
-                            recipeRow(recipe: model)
+            mainContent
+                .navigationTitle("Recipes")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            Task {
+                                RecipeModelFileManager.instance.removeAllImages()
+                                RecipeDataFileManager.instance.removeAllData()
+                                await vm.downloadData()
+                            }
+                        }) {
+                            Image(systemName: "arrow.clockwise")
                         }
                     }
                 }
-            }
-            .navigationTitle("Recipes")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        Task {
-                            // Clear both image and recipe caches
-                            RecipeModelFileManager.instance.removeAllImages()
-                            RecipeDataFileManager.instance.removeAllData()
-                            // Refresh data
-                            await vm.downloadData()
-                        }
-                    }) {
-                        Image(systemName: "arrow.clockwise")
-                    }
-                }
-            }
         }
         .task {
             await vm.downloadData()
