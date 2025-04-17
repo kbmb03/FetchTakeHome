@@ -22,7 +22,16 @@ class RecipeModelDataService {
     }
     
     func downloadData() async throws -> [Recipe] {
+        //empty endpoint:
+        //let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
+        
+        //malformed endpoint:
+        //let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
+        
+        //good endpoint:
         let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+        
+        
         guard let url = URL(string: endpoint) else {
             throw recipeError.invalidURL
         }

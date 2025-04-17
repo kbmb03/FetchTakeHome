@@ -12,9 +12,23 @@ struct DownloadingRecipeImagesView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(vm.dataArray, id: \.uuid) { model in
-                    recipeRow(recipe: model)
+            Group {
+                if vm.dataArray.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("Sorry, but no recipes are currently available. Please refresh or check again later.")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        Spacer()
+                    }
+                } else {
+                    List {
+                        ForEach(vm.dataArray, id: \.uuid) { model in
+                            recipeRow(recipe: model)
+                        }
+                    }
                 }
             }
             .navigationTitle("Recipes")

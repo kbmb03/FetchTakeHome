@@ -19,6 +19,9 @@ struct recipeRow: View {
             VStack(alignment: .leading) {
                 Text(recipe.name)
                     .font(.headline)
+                Text(recipe.cuisine)
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

@@ -70,9 +70,4 @@ func getRecipe() async throws -> [Recipe] {
     }
 }
 
-enum recipeError: Error {
-    case invalidURL
-    case invalidResponse
-    case invalidData
-}
 
