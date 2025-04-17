@@ -13,9 +13,8 @@ struct RecipeDetailsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Large Image
                 if let photoUrl = recipe.photoUrlLarge {
-                    ImageView(url: photoUrl, key: recipe.uuid)
+                    ImageView(url: photoUrl, key: "\(recipe.uuid)_large")
                         .aspectRatio(contentMode: .fill)
                         .frame(maxWidth: .infinity, maxHeight: 300)
                         .clipped()
