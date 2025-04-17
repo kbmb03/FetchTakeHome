@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Recipe: Decodable {
+struct Recipe: Codable {
     let cuisine : String
     let name : String
     let photoUrlLarge : String?

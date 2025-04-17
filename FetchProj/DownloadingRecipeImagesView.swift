@@ -22,8 +22,9 @@ struct DownloadingRecipeImagesView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         Task {
-                            // Clear image cache
+                            // Clear both image and recipe caches
                             RecipeModelFileManager.instance.removeAllImages()
+                            RecipeDataFileManager.instance.removeAllData()
                             // Refresh data
                             await vm.downloadData()
                         }

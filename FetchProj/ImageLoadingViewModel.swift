@@ -66,19 +66,5 @@ class ImageLoadingViewModel: ObservableObject {
         }
         isLoading = false
         
-//        URLSession.shared.dataTaskPublisher(for: url)
-//            .map { UIImage(data: $0.data) }
-//            .receive(on: DispatchQueue.main)
-//            .sink { [weak self] (_) in
-//                self?.isLoading = false
-//            } receiveValue: { [weak self] (returnedImage) in
-//                guard let self = self,
-//                      let image = returnedImage else {
-//                    return
-//                }
-//                self.image = returnedImage
-//                self.manager.add(key: self.imageKey, value: image)
-//            }
-//            .store(in: &cancellables)
     }
 }
