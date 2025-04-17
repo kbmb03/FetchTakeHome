@@ -12,34 +12,29 @@ class RecipeModelDataService {
     
     static let instance = RecipeModelDataService()
     @Published var recipeModels: [Recipe] = []
-    var cancellables = Set<AnyCancellable>()
     
-    private init() {
-        downloadData()
-    }
+    private init() {}
     
-    func downloadData() {
-        guard let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json") else {
-            return
+    func downloadData() async throws -> [Recipe] {
+        let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+        guard let url = URL(string: endpoint) else {
+            throw recipeError.invalidURL
         }
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .receive(on: DispatchQueue.main)
-            .tryMap(handleOutput)
-            .decode(type: RecipeWrapper.self, decoder: decoder)
-            .sink { (completion) in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Error downloading data. \(error)")
-                }
-            } receiveValue: { [weak self] (returnedRecipeModels) in
-                self?.recipeModels = returnedRecipeModels.recipes
-            }
-            .store(in: &cancellables)
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw recipeError.invalidResponse
+        }
+        
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let decodedRecipes = try decoder.decode(RecipeWrapper.self, from: data)
+            self.recipeModels = decodedRecipes.recipes
+            return decodedRecipes.recipes
+            //error log invalid recipes??
+        } catch {
+            throw recipeError.invalidData
+        }
     }
     
     private func handleOutput(output: URLSession.DataTaskPublisher.Output) throws -> Data {

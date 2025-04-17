@@ -18,6 +18,18 @@ struct DownloadingRecipeImagesView: View {
                 }
             }
             .navigationTitle("Recipes")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        print("refresh")
+                    }) {
+                        Image(systemName: "arror.clockwise")
+                    }
+                }
+            }
+        }
+        .task {
+            await vm.downloadData()
         }
     }
 }
@@ -26,9 +38,3 @@ struct DownloadingRecipeImagesView: View {
     DownloadingRecipeImagesView()
 }
 
-//List(recipes, id: \.uuid) { recipe in
-//    NavigationLink { RecipeView(recipe: recipe)
-//    } label: {
-//        recipeRow(recipe: recipe)
-//    }
-//}

@@ -39,6 +39,7 @@ class RecipeModelFileManager {
             .first?
             .appendingPathComponent(folderName)
     }
+    
     private func getImagePath(key: String) -> URL? {
         guard let folder = getFolderPath() else {
             return nil
@@ -46,23 +47,38 @@ class RecipeModelFileManager {
         return folder.appendingPathComponent(key + ".png")
     }
     
-    func add(key: String, value: UIImage) {
+    func add(key: String, value: UIImage) async {
         guard let data = value.pngData(),
               let url = getImagePath(key: key) else {
             return
         }
-        do {
-            try data.write(to: url)
-        } catch let error {
-            print("error saving to file manager: \(error)")
+        Task.detached(priority: .background) {
+            do {
+                try data.write(to: url)
+            } catch let error {
+                print("error adding image to file manager \(error)")
+            }
         }
     }
     
-    func get(key: String) -> UIImage? {
+    func get(key: String) async -> UIImage? {
         guard let url = getImagePath(key: key),
               FileManager.default.fileExists(atPath: url.path) else {
             return nil
         }
-        return UIImage(contentsOfFile: url.path)
+        return await Task.detached(priority: .background) {
+            return UIImage(contentsOfFile: url.path)
+        }.value
+    }
+    
+    func removeAllImages() {
+        guard let folder = getFolderPath() else {
+            return
+        }
+        //correclty getting saved images. next remove, see if it downloads
+        //if so, allow refresh to delete all and re get them
+        //add detail view, gpt some tests, done
+        
+
     }
 }

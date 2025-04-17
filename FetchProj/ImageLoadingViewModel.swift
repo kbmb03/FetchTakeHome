@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
+@MainActor
 class ImageLoadingViewModel: ObservableObject {
     @Published var image: UIImage? = nil
     @Published var isLoading: Bool = false
@@ -22,20 +23,22 @@ class ImageLoadingViewModel: ObservableObject {
     init(url: String, key: String) {
         urlString = url
         imageKey = key
-        getImage()
+        Task {
+            await getImage()
+        }
     }
     
-    func getImage() {
-        if let savedImage = manager.get(key: imageKey) {
+    func getImage() async {
+        if let savedImage = await manager.get(key: imageKey) {
             image = savedImage
             print("gets saved image")
         } else {
-            downloadImage()
+            await downloadImage()
             print("Downloading Images")
         }
     }
     
-    func downloadImage() {
+    func downloadImage() async {
         isLoading = true
         
         guard let url = URL(string: urlString) else {
@@ -43,20 +46,39 @@ class ImageLoadingViewModel: ObservableObject {
             print("A")
             return
         }
-        
-        URLSession.shared.dataTaskPublisher(for: url)
-            .map { UIImage(data: $0.data) }
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] (_) in
-                self?.isLoading = false
-            } receiveValue: { [weak self] (returnedImage) in
-                guard let self = self,
-                      let image = returnedImage else {
-                    return
-                }
-                self.image = returnedImage
-                self.manager.add(key: self.imageKey, value: image)
+        //fix logic below to be async. updates image, adds key to manager
+        do {
+            
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw recipeError.invalidResponse
             }
-            .store(in: &cancellables)
+            
+            if let downloadedImage = UIImage(data: data) {
+                self.image = downloadedImage
+                await manager.add(key: self.imageKey, value: downloadedImage)
+                print("Image downloaded and saved")
+            } else {
+                print("failed to save image")
+            }
+        } catch {
+            print("Error downloading image \(error)")
+        }
+        isLoading = false
+        
+//        URLSession.shared.dataTaskPublisher(for: url)
+//            .map { UIImage(data: $0.data) }
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] (_) in
+//                self?.isLoading = false
+//            } receiveValue: { [weak self] (returnedImage) in
+//                guard let self = self,
+//                      let image = returnedImage else {
+//                    return
+//                }
+//                self.image = returnedImage
+//                self.manager.add(key: self.imageKey, value: image)
+//            }
+//            .store(in: &cancellables)
     }
 }
