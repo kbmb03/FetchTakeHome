@@ -21,7 +21,12 @@ struct DownloadingRecipeImagesView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        print("refresh")
+                        Task {
+                            // Clear image cache
+                            RecipeModelFileManager.instance.removeAllImages()
+                            // Refresh data
+                            await vm.downloadData()
+                        }
                     }) {
                         Image(systemName: "arrow.clockwise")
                     }

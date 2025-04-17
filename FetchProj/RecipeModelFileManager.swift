@@ -75,10 +75,13 @@ class RecipeModelFileManager {
         guard let folder = getFolderPath() else {
             return
         }
-        //correclty getting saved images. next remove, see if it downloads
-        //if so, allow refresh to delete all and re get them
-        //add detail view, gpt some tests, done
-        
-
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil)
+            for file in contents {
+                try FileManager.default.removeItem(at: file)
+            }
+        } catch {
+            print("Error removing cached images: \(error)")
+        }
     }
 }
