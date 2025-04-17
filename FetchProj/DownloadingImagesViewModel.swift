@@ -12,6 +12,8 @@ import Combine
 class DownloadingImagesViewModel: ObservableObject {
     
     @Published var dataArray: [Recipe] = []
+    @Published var error: recipeError?
+    
     let dataService = RecipeModelDataService.instance
     
     init() {
@@ -26,16 +28,14 @@ class DownloadingImagesViewModel: ObservableObject {
             let recipes = try await dataService.downloadData()
             //downloadData sets dataService value, set self.dataArray to it or make it return something.
             self.dataArray = recipes
-        } catch {
+            self.error = nil
+            //if case for recipeError, then set it, otherwise set error as other
+        } catch let error as recipeError {
             print("failed to download data: \(error)")
+            self.error = error
+        } catch {
+            self.error = .other(error)
         }
-        
-//        dataService.$recipeModels
-//            .sink { [weak self] (returnedRecipeModels) in
-//                self?.dataArray = returnedRecipeModels
-//                print(self?.dataArray ?? "")
-//            }
-//            .store(in: &cancellables)
     }
     
 }

@@ -13,7 +13,17 @@ struct DownloadingRecipeImagesView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if vm.dataArray.isEmpty {
+                if let error = vm.error {
+                    VStack {
+                        Spacer()
+                        Text(error.errorMessage)
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        Spacer()
+                    }
+                } else if vm.dataArray.isEmpty {
                     VStack {
                         Spacer()
                         Text("Sorry, but no recipes are currently available. Please refresh or check again later.")
