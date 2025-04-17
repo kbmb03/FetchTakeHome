@@ -11,7 +11,7 @@ struct DownloadingRecipeImagesView: View {
     @StateObject var vm = DownloadingImagesViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(vm.dataArray, id: \.uuid) { model in
                     recipeRow(recipe: model)
@@ -23,7 +23,7 @@ struct DownloadingRecipeImagesView: View {
                     Button(action: {
                         print("refresh")
                     }) {
-                        Image(systemName: "arror.clockwise")
+                        Image(systemName: "arrow.clockwise")
                     }
                 }
             }
