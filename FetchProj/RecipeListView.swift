@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct RecipeListView: View {
-    
-    let recipes : [Recipe]
+    let recipes: [Recipe]
     
     var body: some View {
         List {
-            ForEach(recipes, id: \.uuid) { model in
-                recipeRow(recipe: model)
+            ForEach(recipes, id: \.uuid) { recipe in
+                NavigationLink(destination: RecipeDetailsView(recipe: recipe)) {
+                    recipeRow(recipe: recipe)
+                }
             }
         }
     }
