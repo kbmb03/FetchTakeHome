@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     let recipe: Recipe
+    @State private var favoritesManager = FavoritesManager.shared
     
     var body: some View {
         ScrollView {
@@ -23,9 +24,21 @@ struct RecipeDetailsView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     // Header Section
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(recipe.name)
-                            .font(.title)
-                            .fontWeight(.bold)
+                        HStack {
+                            Text(recipe.name)
+                                .font(.title)
+                                .fontWeight(.bold)
+                            
+                            Spacer()
+                            
+                            Button {
+                                favoritesManager.toggle(recipe)
+                            } label: {
+                                Image(systemName: favoritesManager.contains(recipe) ? "star.fill" : "star")
+                                    .font(.system(size: 35))
+                                    .foregroundStyle(favoritesManager.contains(recipe) ? .yellow : .gray)
+                            }
+                        }
                         
                         HStack {
                             Label(recipe.cuisine, systemImage: "fork.knife")

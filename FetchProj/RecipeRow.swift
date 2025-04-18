@@ -10,6 +10,7 @@ import SwiftUI
 
 struct recipeRow: View {
     let recipe: Recipe
+    @State private var favoritesManager = FavoritesManager.shared
     
     var body: some View {
         
@@ -17,8 +18,16 @@ struct recipeRow: View {
             ImageView(url: recipe.photoUrlSmall ?? "", key: recipe.uuid)
                 .frame(width: 75, height: 75)
             VStack(alignment: .leading) {
-                Text(recipe.name)
-                    .font(.headline)
+                HStack {
+                    Text(recipe.name)
+                        .font(.headline)
+                    if favoritesManager.contains(recipe) {
+                        Image(systemName: "star.fill")
+                            .foregroundStyle(.yellow)
+                            .font(.subheadline)
+                    }
+                }
+
                 Text(recipe.cuisine)
                     .font(.subheadline)
                     .foregroundStyle(.gray)
