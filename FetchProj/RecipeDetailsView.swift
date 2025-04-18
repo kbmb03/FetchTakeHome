@@ -12,48 +12,58 @@ struct RecipeDetailsView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 0) {
                 if let photoUrl = recipe.photoUrlLarge {
-                    ImageView(url: photoUrl, key: "\(recipe.uuid)_large", isCircle: false)
+                    ImageView(url: photoUrl, key: "\(recipe.uuid)_large")
                         .aspectRatio(contentMode: .fill)
                         .frame(maxWidth: .infinity, maxHeight: 300)
                         .clipped()
                 }
                 
-                VStack(alignment: .leading, spacing: 16) {
-                    // Recipe Name
-                    Text(recipe.name)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
-                    // Cuisine Type
-                    HStack {
-                        Image(systemName: "fork.knife")
-                            .foregroundColor(.gray)
-                        Text(recipe.cuisine)
-                            .font(.headline)
-                            .foregroundColor(.gray)
+                VStack(alignment: .leading, spacing: 24) {
+                    // Header Section
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(recipe.name)
+                            .font(.title)
+                            .fontWeight(.bold)
+                        
+                        HStack {
+                            Label(recipe.cuisine, systemImage: "fork.knife")
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     
-                    // Links Section
-                    VStack(alignment: .leading, spacing: 12) {
-                        if let sourceUrl = recipe.sourceUrl {
-                            Link(destination: URL(string: sourceUrl)!) {
+                    VStack(alignment: .leading, spacing: 16) {
+                        if let urlStr = recipe.sourceUrl,
+                           let url = URL(string: urlStr) {
+                            Link(destination: url) {
                                 HStack {
                                     Image(systemName: "book.fill")
-                                    Text("View Recipe Source")
+                                        .foregroundStyle(.blue)
+                                    Text("View Recipe")
+                                        .foregroundStyle(.primary)
                                 }
                             }
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(Color.blue.opacity(0.1))
+                            .cornerRadius(8)
                         }
                         
-                        if let youtubeUrl = recipe.youtubeUrl {
-                            Link(destination: URL(string: youtubeUrl)!) {
+                        if let urlStr = recipe.youtubeUrl,
+                           let url = URL(string: urlStr) {
+                            Link(destination: url) {
                                 HStack {
                                     Image(systemName: "play.rectangle.fill")
-                                        .foregroundColor(.red)
-                                    Text("Watch on YouTube")
+                                        .foregroundStyle(.red)
+                                    Text("Watch Video Tutorial")
+                                        .foregroundStyle(.primary)
                                 }
                             }
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 12)
+                            .background(Color.red.opacity(0.1))
+                            .cornerRadius(8)
                         }
                     }
                 }
@@ -61,5 +71,6 @@ struct RecipeDetailsView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarBackground(.visible, for: .navigationBar)
     }
 }

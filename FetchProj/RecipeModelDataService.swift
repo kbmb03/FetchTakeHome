@@ -45,7 +45,10 @@ class RecipeModelDataService {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let decodedRecipes = try decoder.decode(RecipeWrapper.self, from: data)
-            self.recipeModels = decodedRecipes.recipes
+            
+            await MainActor.run {
+                self.recipeModels = decodedRecipes.recipes
+            }
             
             // Save the fresh data to cache
             fileManager.saveRecipes(recipes: decodedRecipes.recipes)
@@ -55,6 +58,9 @@ class RecipeModelDataService {
         } catch {
             // If network request fails and we have cached data, return that
             if let cachedRecipes = fileManager.loadRecipes() {
+                await MainActor.run {
+                    self.recipeModels = cachedRecipes
+                }
                 return cachedRecipes
             }
             throw recipeError.invalidData

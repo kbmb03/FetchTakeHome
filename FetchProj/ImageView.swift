@@ -9,11 +9,9 @@ import SwiftUI
 
 struct ImageView: View {
     @StateObject var loader: ImageLoadingViewModel
-    var isCircular: Bool = true
         
-    init(url: String, key: String, isCircle: Bool = true) {
+    init(url: String, key: String) {
         _loader = StateObject(wrappedValue: ImageLoadingViewModel(url: url, key: key))
-        self.isCircular = isCircle
     }
     
     var body: some View {
@@ -23,7 +21,6 @@ struct ImageView: View {
             } else if let image = loader.image {
                 Image(uiImage: image)
                     .resizable()
-                    //.clipShape(isCircular ? Circle() : Rectangle())
             }
         }
     }
