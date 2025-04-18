@@ -18,9 +18,15 @@ struct RecipeListView: View {
     }
     
     var body: some View {
-        List(filteredRecipes, id: \.uuid) { recipe in
-            NavigationLink(destination: RecipeDetailsView(recipe: recipe)) {
-                recipeRow(recipe: recipe)
+        Group {
+            if showFavoritesOnly && filteredRecipes.isEmpty {
+                EmptyFavoritesView()
+            } else {
+                List(filteredRecipes, id: \.uuid) { recipe in
+                    NavigationLink(destination: RecipeDetailsView(recipe: recipe)) {
+                        recipeRow(recipe: recipe)
+                    }
+                }
             }
         }
         .toolbar {
@@ -31,7 +37,7 @@ struct RecipeListView: View {
                     }
                 } label: {
                     Image(systemName: showFavoritesOnly ? "star.fill" : "star")
-                        .font(.system(size: 18))
+                        .font(.system(size: 17))
                         .foregroundStyle(showFavoritesOnly ? .yellow : .gray)
                 }
             }

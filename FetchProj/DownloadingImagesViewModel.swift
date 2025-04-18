@@ -26,7 +26,6 @@ class DownloadingImagesViewModel: ObservableObject {
         
         do {
             let recipes = try await dataService.downloadData()
-            //downloadData sets dataService value, set self.dataArray to it or make it return something.
             self.dataArray = recipes
             self.error = nil
             //if case for recipeError, then set it, otherwise set error as other

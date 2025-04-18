@@ -15,7 +15,6 @@ struct Recipe: Codable {
     let uuid : String
     let sourceUrl : String?
     let youtubeUrl : String?
-
 }
 
 struct RecipeWrapper: Decodable {
