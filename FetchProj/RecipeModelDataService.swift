@@ -22,6 +22,7 @@ class RecipeModelDataService {
     }
     
     func downloadData() async throws -> [Recipe] {
+        
         //empty endpoint:
         //let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
         
@@ -49,13 +50,11 @@ class RecipeModelDataService {
                 self.recipeModels = decodedRecipes.recipes
             }
             
-            // Save the fresh data to cache
             fileManager.saveRecipes(recipes: decodedRecipes.recipes)
             print("recipes saved")
             
             return decodedRecipes.recipes
         } catch {
-            // If network request fails and we have cached data, return that
             if let cachedRecipes = fileManager.loadRecipes() {
                 await MainActor.run {
                     self.recipeModels = cachedRecipes

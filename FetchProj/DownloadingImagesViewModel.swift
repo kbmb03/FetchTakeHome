@@ -28,7 +28,6 @@ class DownloadingImagesViewModel: ObservableObject {
             let recipes = try await dataService.downloadData()
             self.dataArray = recipes
             self.error = nil
-            //if case for recipeError, then set it, otherwise set error as other
         } catch let error as recipeError {
             print("failed to download data: \(error)")
             self.error = error

@@ -13,8 +13,6 @@ class FavoritesManager {
     static let shared = FavoritesManager()
 
     private var favoriteRecipes: Set<String>
-
-    //UserDefaults key
     private let key = "Favorites"
 
     private init() {

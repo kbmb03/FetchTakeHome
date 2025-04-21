@@ -46,7 +46,6 @@ class ImageLoadingViewModel: ObservableObject {
             print("A")
             return
         }
-        //fix logic below to be async. updates image, adds key to manager
         do {
             
             let (data, response) = try await URLSession.shared.data(from: url)

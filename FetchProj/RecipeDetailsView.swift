@@ -22,7 +22,6 @@ struct RecipeDetailsView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 24) {
-                    // Header Section
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             Text(recipe.name)
