@@ -14,7 +14,6 @@ class ImageLoadingViewModel: ObservableObject {
     @Published var image: UIImage? = nil
     @Published var isLoading: Bool = false
     
-    var cancellables = Set<AnyCancellable>()
     let manager = RecipeModelFileManager.instance
     
     let urlString: String
