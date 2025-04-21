@@ -1,5 +1,5 @@
 //
-//  DownloadingRecipeImagesView.swift
+//  RecipeContainerView.swift
 //  FetchProj
 //
 //  Created by Kaleb Davis on 4/15/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DownloadingRecipeImagesView: View {
+struct RecipeContainerView: View {
     @StateObject var vm = DownloadingImagesViewModel()
     
     @ViewBuilder
@@ -46,6 +46,6 @@ struct DownloadingRecipeImagesView: View {
 }
 
 #Preview {
-    DownloadingRecipeImagesView()
+    RecipeContainerView()
 }
 
