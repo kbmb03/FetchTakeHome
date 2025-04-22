@@ -18,7 +18,7 @@ enum recipeError: Error {
         case .invalidURL:
             return "Sorry, there was a problem with the URL"
         case .invalidResponse:
-            return "Sorry, we have recieved an invalid response from the server"
+            return "Sorry, we have received an invalid response from the server"
         case .invalidData:
             return "Sorry, there was a problem with the data, please refresh or try again later"
         case .other(let error):
