@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import os
 
-@Observable
-class FavoritesManager {
+class FavoritesManager: ObservableObject {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: FavoritesManager.self))
     
     static let shared = FavoritesManager()
 
-    private var favoriteRecipes: Set<String>
+    @Published private(set) var favoriteRecipes: Set<String>
     private let key = "Favorites"
 
     private init() {
@@ -29,6 +30,7 @@ class FavoritesManager {
     }
 
     func add(_ recipe: Recipe) {
+        print("recipe is: \(recipe.name)")
         favoriteRecipes.insert(recipe.uuid)
         save()
     }
@@ -49,6 +51,9 @@ class FavoritesManager {
     func save() {
         if let encoded = try? JSONEncoder().encode(favoriteRecipes) {
             UserDefaults.standard.set(encoded, forKey: key)
+            Self.logger.info("Successfully saved favorites list")
+        } else {
+            Self.logger.error("Failed to save favorites")
         }
     }
         
