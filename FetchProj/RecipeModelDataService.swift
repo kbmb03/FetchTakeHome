@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 class RecipeModelDataService {
     
@@ -15,22 +14,12 @@ class RecipeModelDataService {
     private let fileManager = RecipeStorageManager.instance
     
     private init() {
-        // Try to load cached recipes when service is initialized
-        if let cachedRecipes = fileManager.loadRecipes() {
-            self.recipeModels = cachedRecipes
+        if let savedRecipes = fileManager.loadRecipes() {
+            self.recipeModels = savedRecipes
         }
     }
     
-    func downloadData() async throws -> [Recipe] {
-        
-        //empty endpoint:
-        //let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json"
-        
-        //malformed endpoint:
-        //let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json"
-        
-        //good endpoint:
-        let endpoint = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json"
+    func downloadData(from endpoint: String = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json") async throws -> [Recipe] {
         
         guard let url = URL(string: endpoint) else {
             throw recipeError.invalidURL
@@ -55,11 +44,11 @@ class RecipeModelDataService {
             
             return decodedRecipes.recipes
         } catch {
-            if let cachedRecipes = fileManager.loadRecipes() {
+            if let savedRecipes = fileManager.loadRecipes() {
                 await MainActor.run {
-                    self.recipeModels = cachedRecipes
+                    self.recipeModels = savedRecipes
                 }
-                return cachedRecipes
+                return savedRecipes
             }
             throw recipeError.invalidData
         }
