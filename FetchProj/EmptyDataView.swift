@@ -21,6 +21,3 @@ struct EmptyDataView: View {
     }
 }
 
-#Preview {
-    EmptyDataView()
-}

@@ -44,8 +44,3 @@ struct RecipeContainerView: View {
         }
     }
 }
-
-#Preview {
-    RecipeContainerView()
-}
-

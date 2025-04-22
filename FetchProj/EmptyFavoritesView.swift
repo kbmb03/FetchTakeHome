@@ -21,7 +21,3 @@ struct EmptyFavoritesView: View {
         }
     }
 }
-
-#Preview {
-    EmptyFavoritesView()
-}

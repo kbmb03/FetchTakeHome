@@ -36,8 +36,3 @@ struct recipeRow: View {
         }
     }
 }
-
-#Preview {
-    recipeRow(recipe: Recipe(cuisine: "American", name: "Burger", photoUrlLarge: nil, photoUrlSmall: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/small.jpg", uuid: "ABC", sourceUrl: nil, youtubeUrl: nil))
-}
-

@@ -23,7 +23,3 @@ struct ErrorView: View {
         }
     }
 }
-
-#Preview {
-    ErrorView(errorMessage: "Sorry, there was a problem with the data, please refresh and try again later")
-}
