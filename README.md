@@ -5,6 +5,13 @@ The app displays the list of recipes, with a functional refresh button, a recipe
 ![FetchProjSS1](https://github.com/user-attachments/assets/d077adc6-a9ed-4ded-8be1-d738df151f6c)
 ![FetchProjSS2](https://github.com/user-attachments/assets/48ca1779-5fb9-4496-9da7-16c3f5de4edd)
 ![FetchProjSS3](https://github.com/user-attachments/assets/5233c8a3-becf-4361-a5c3-7590b0ce72fb)
+
+<p align="center">
+  <img src="assets/ss1.png" width="200" alt="List View">
+  <img src="assets/ss2.png" width="200" alt="Detail View">
+  <img src="assets/ss3.png" width="200" alt="Favorites">
+</p>
+
 https://github.com/user-attachments/assets/b412c4da-34ea-4990-bca0-622071b9bbf5
 
 ### Focus Areas: What specific areas of the project did you prioritize? Why did you choose to focus on these areas?
