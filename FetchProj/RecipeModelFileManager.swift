@@ -10,7 +10,7 @@ import SwiftUI
 import os
 
 class RecipeModelFileManager {
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeModelFileManager.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: RecipeModelFileManager.self))
     
     static let instance = RecipeModelFileManager()
     let folderName = "downloaded_photos"

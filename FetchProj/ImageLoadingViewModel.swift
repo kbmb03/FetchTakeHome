@@ -11,7 +11,7 @@ import os
 
 @MainActor
 class ImageLoadingViewModel: ObservableObject {
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: ImageLoadingViewModel.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: ImageLoadingViewModel.self))
     
     @Published var image: UIImage? = nil
     @Published var isLoading: Bool = false

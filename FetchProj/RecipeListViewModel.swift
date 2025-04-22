@@ -10,7 +10,7 @@ import os
 
 @MainActor
 class RecipeListViewModel: ObservableObject {
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeListViewModel.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: RecipeListViewModel.self))
     
     @Published var dataArray: [Recipe] = []
     @Published var error: RecipeError?

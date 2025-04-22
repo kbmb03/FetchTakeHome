@@ -11,7 +11,7 @@ import os
 
 class RecipeStorageManager {
     
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeStorageManager.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: RecipeStorageManager.self))
     
     static let instance = RecipeStorageManager()
     private let folderName = "recipe_data"

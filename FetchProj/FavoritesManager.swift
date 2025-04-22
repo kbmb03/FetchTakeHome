@@ -9,7 +9,7 @@ import Foundation
 import os
 
 class FavoritesManager: ObservableObject {
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: FavoritesManager.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: FavoritesManager.self))
     
     static let shared = FavoritesManager()
 

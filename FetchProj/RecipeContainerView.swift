@@ -18,7 +18,7 @@ struct RecipeContainerView: View {
         } else if vm.dataArray.isEmpty {
             EmptyDataView()
         } else {
-            RecipeListView(recipes: vm.dataArray, favoritesManager: favoritesManager)
+            RecipeListView(recipes: vm.dataArray)
         }
     }
     

@@ -9,7 +9,7 @@ import Foundation
 import os
 
 class RecipeModelDataService {
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeModelDataService.self))
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.kd.FetchProj", category: String(describing: RecipeModelDataService.self))
     
     static let instance = RecipeModelDataService()
     @Published var recipeModels: [Recipe] = []

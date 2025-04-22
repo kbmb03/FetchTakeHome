@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeListView: View {
     let recipes: [Recipe]
-    @StateObject var favoritesManager = FavoritesManager.shared
+    @StateObject private var favoritesManager = FavoritesManager.shared
     @State private var showFavoritesOnly = false
     
     var filteredRecipes: [Recipe] {
