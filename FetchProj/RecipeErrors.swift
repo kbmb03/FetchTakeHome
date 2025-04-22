@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum recipeError: Error {
+enum RecipeError: Error {
     case invalidURL
     case invalidResponse
     case invalidData

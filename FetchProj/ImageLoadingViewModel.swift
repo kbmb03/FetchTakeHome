@@ -48,7 +48,7 @@ class ImageLoadingViewModel: ObservableObject {
             
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw recipeError.invalidResponse
+                throw RecipeError.invalidResponse
             }
             
             if let downloadedImage = UIImage(data: data) {

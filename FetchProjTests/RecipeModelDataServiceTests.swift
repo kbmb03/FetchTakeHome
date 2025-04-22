@@ -45,7 +45,7 @@ final class RecipeModelDataServiceTests: XCTestCase {
             _ = try await recipeModelDataService.downloadData(from: endpoint)
             XCTFail("malformed data should trigger error to be thrown")
         } catch {
-            XCTAssertTrue(String(describing: error) == String(describing: recipeError.invalidData), "Should throw an invalidData error")
+            XCTAssertTrue(String(describing: error) == String(describing: RecipeError.invalidData), "Should throw an invalidData error")
         }
     }
     
@@ -54,7 +54,7 @@ final class RecipeModelDataServiceTests: XCTestCase {
             _ = try await recipeModelDataService.downloadData(from: "")
             XCTFail("Should throw an error for invalid URL")
         } catch {
-            XCTAssertTrue(String(describing: error) == String(describing: recipeError.invalidURL), "Should throw an invalidURL error")
+            XCTAssertTrue(String(describing: error) == String(describing: RecipeError.invalidURL), "Should throw an invalidURL error")
         }
     }
     

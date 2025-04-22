@@ -24,13 +24,13 @@ class RecipeModelDataService {
     func downloadData(from endpoint: String = "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json") async throws -> [Recipe] {
         
         guard let url = URL(string: endpoint) else {
-            throw recipeError.invalidURL
+            throw RecipeError.invalidURL
         }
         
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw recipeError.invalidResponse
+                throw RecipeError.invalidResponse
             }
             
             let decoder = JSONDecoder()
@@ -53,7 +53,7 @@ class RecipeModelDataService {
                 return savedRecipes
             }
             Self.logger.error("Unable to download recipes or get saved recipes")
-            throw recipeError.invalidData
+            throw RecipeError.invalidData
         }
     }
 }
