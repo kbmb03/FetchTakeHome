@@ -2,14 +2,11 @@
 
 ### Summary: Include screen shots or a video of your app highlighting its features
 The app displays the list of recipes, with a functional refresh button, a recipe detail view for each recipe, and a favorites tab showing the recipes starred by the user. 
-![FetchProjSS1](https://github.com/user-attachments/assets/d077adc6-a9ed-4ded-8be1-d738df151f6c)
-![FetchProjSS2](https://github.com/user-attachments/assets/48ca1779-5fb9-4496-9da7-16c3f5de4edd)
-![FetchProjSS3](https://github.com/user-attachments/assets/5233c8a3-becf-4361-a5c3-7590b0ce72fb)
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d077adc6-a9ed-4ded-8be1-d738df151f6c" width="150" alt="List View" />
-  <img src="https://github.com/user-attachments/assets/48ca1779-5fb9-4496-9da7-16c3f5de4edd" width="150" alt="Detail View" />
-  <img src="https://github.com/user-attachments/assets/5233c8a3-becf-4361-a5c3-7590b0ce72fb" width="150" alt="Favorites View" />
+  <img src="https://github.com/user-attachments/assets/d077adc6-a9ed-4ded-8be1-d738df151f6c" width="250" alt="List View" />
+  <img src="https://github.com/user-attachments/assets/48ca1779-5fb9-4496-9da7-16c3f5de4edd" width="250" alt="Detail View" />
+  <img src="https://github.com/user-attachments/assets/5233c8a3-becf-4361-a5c3-7590b0ce72fb" width="250" alt="Favorites View" />
 </p>
 
 
