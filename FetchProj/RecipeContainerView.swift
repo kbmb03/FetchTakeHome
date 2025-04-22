@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeContainerView: View {
     @StateObject var vm = RecipeListViewModel()
+    @StateObject private var favoritesManager = FavoritesManager.shared
     
     @ViewBuilder
     var mainContent: some View {
@@ -17,7 +18,7 @@ struct RecipeContainerView: View {
         } else if vm.dataArray.isEmpty {
             EmptyDataView()
         } else {
-            RecipeListView(recipes: vm.dataArray)
+            RecipeListView(recipes: vm.dataArray, favoritesManager: favoritesManager)
         }
     }
     

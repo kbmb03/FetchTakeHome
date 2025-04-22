@@ -8,12 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct recipeRow: View {
+struct RecipeRow: View {
     let recipe: Recipe
-    @State private var favoritesManager = FavoritesManager.shared
+    @StateObject private var favoritesManager = FavoritesManager.shared
     
     var body: some View {
-        
         HStack {
             ImageView(url: recipe.photoUrlSmall ?? "", key: recipe.uuid)
                 .frame(width: 75, height: 75)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeListView: View {
     let recipes: [Recipe]
-    @State private var favoritesManager = FavoritesManager.shared
+    @StateObject var favoritesManager = FavoritesManager.shared
     @State private var showFavoritesOnly = false
     
     var filteredRecipes: [Recipe] {
@@ -24,7 +24,7 @@ struct RecipeListView: View {
             } else {
                 List(filteredRecipes, id: \.uuid) { recipe in
                     NavigationLink(destination: RecipeDetailsView(recipe: recipe)) {
-                        recipeRow(recipe: recipe)
+                        RecipeRow(recipe: recipe)
                     }
                 }
             }

@@ -30,7 +30,6 @@ class FavoritesManager: ObservableObject {
     }
 
     func add(_ recipe: Recipe) {
-        print("recipe is: \(recipe.name)")
         favoriteRecipes.insert(recipe.uuid)
         save()
     }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeDetailsView: View {
     let recipe: Recipe
-    @State private var favoritesManager = FavoritesManager.shared
+    @StateObject private var favoritesManager = FavoritesManager.shared
     
     var body: some View {
         ScrollView {
