@@ -18,9 +18,6 @@ class RecipeListViewModel: ObservableObject {
     let dataService = RecipeModelDataService.instance
     
     init() {
-        Task {
-            await downloadData()
-        }
     }
     
     func downloadData() async {

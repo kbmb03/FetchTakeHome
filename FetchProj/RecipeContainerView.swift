@@ -40,8 +40,8 @@ struct RecipeContainerView: View {
                     }
                 }
         }
-        .task {
-            await vm.downloadData()
+        .onAppear {
+            Task { await vm.downloadData() }
         }
     }
 }
