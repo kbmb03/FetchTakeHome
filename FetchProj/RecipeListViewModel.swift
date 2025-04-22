@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import os
 
 @MainActor
 class RecipeListViewModel: ObservableObject {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeListViewModel.self))
     
     @Published var dataArray: [Recipe] = []
     @Published var error: recipeError?
@@ -22,15 +24,15 @@ class RecipeListViewModel: ObservableObject {
     }
     
     func downloadData() async {
-        
         do {
             let recipes = try await dataService.downloadData()
             self.dataArray = recipes
             self.error = nil
         } catch let error as recipeError {
-            print("failed to download data: \(error)")
+            Self.logger.error("Failed to download data: \(error)")
             self.error = error
         } catch {
+            Self.logger.error("Failed to download data: \(error)")
             self.error = .other(error)
         }
     }

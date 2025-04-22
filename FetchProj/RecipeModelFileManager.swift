@@ -7,8 +7,10 @@
 
 import Foundation
 import SwiftUI
+import os
 
 class RecipeModelFileManager {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeModelFileManager.self))
     
     static let instance = RecipeModelFileManager()
     let folderName = "downloaded_photos"
@@ -25,9 +27,9 @@ class RecipeModelFileManager {
         if !FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                print("created Folder")
+                Self.logger.notice("Created folder successfully")
             } catch let error {
-                print("error creating foler: \(error)")
+                Self.logger.error("error creating foler: \(error)")
             }
         }
     }
@@ -56,7 +58,7 @@ class RecipeModelFileManager {
             do {
                 try data.write(to: url)
             } catch let error {
-                print("error adding image to file manager \(error)")
+                Self.logger.error("error adding image to file manager \(error)")
             }
         }
     }
@@ -80,8 +82,9 @@ class RecipeModelFileManager {
             for file in contents {
                 try FileManager.default.removeItem(at: file)
             }
+            Self.logger.notice("All images successfully removed")
         } catch {
-            print("Error removing cached images: \(error)")
+            Self.logger.error("Error removing cached images: \(error)")
         }
     }
 }

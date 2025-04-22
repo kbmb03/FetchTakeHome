@@ -7,8 +7,11 @@
 
 import Foundation
 import SwiftUI
+import os
 
 class RecipeStorageManager {
+    
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeStorageManager.self))
     
     static let instance = RecipeStorageManager()
     private let folderName = "recipe_data"
@@ -26,9 +29,9 @@ class RecipeStorageManager {
         if !FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                print("Created recipe data folder")
+                Self.logger.notice("successfully created new folder")
             } catch {
-                print("Error creating recipe data folder: \(error)")
+                Self.logger.error("Failed to create folder: \(error)")
             }
         }
     }
@@ -54,9 +57,9 @@ class RecipeStorageManager {
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(recipes)
             try data.write(to: url)
-            print("Recipes saved")
+            Self.logger.notice("Recipes successfully saved")
         } catch {
-            print("Error saving recipes to file: \(error)")
+            Self.logger.error("Error saving recipes to file: \(error)")
         }
     }
     
@@ -71,10 +74,10 @@ class RecipeStorageManager {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let recipes = try decoder.decode([Recipe].self, from: data)
-            print("recipes loaded")
+            Self.logger.notice("recipes successfully loaded")
             return recipes
         } catch {
-            print("Error loading recipes from file: \(error)")
+            Self.logger.error("Error loading recipes from file: \(error)")
             return nil
         }
     }
@@ -83,6 +86,6 @@ class RecipeStorageManager {
         guard let folder = getFolderPath() else { return }
         try? FileManager.default.removeItem(at: folder)
         createFolderIfNeeded()
-        print("Recipe cache cleared")
+        Self.logger.notice("Recipe cache cleared")
     }
 }

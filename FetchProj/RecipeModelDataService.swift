@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import os
 
 class RecipeModelDataService {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: RecipeModelDataService.self))
     
     static let instance = RecipeModelDataService()
     @Published var recipeModels: [Recipe] = []
@@ -40,16 +42,17 @@ class RecipeModelDataService {
             }
             
             fileManager.saveRecipes(recipes: decodedRecipes.recipes)
-            print("recipes saved")
-            
+            Self.logger.notice("Recipes successfully saved")
             return decodedRecipes.recipes
         } catch {
             if let savedRecipes = fileManager.loadRecipes() {
                 await MainActor.run {
                     self.recipeModels = savedRecipes
                 }
+                Self.logger.notice("Used saved recipes")
                 return savedRecipes
             }
+            Self.logger.error("Unable to download recipes or get saved recipes")
             throw recipeError.invalidData
         }
     }

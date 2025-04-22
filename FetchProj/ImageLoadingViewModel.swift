@@ -7,9 +7,12 @@
 
 import Foundation
 import SwiftUI
+import os
 
 @MainActor
 class ImageLoadingViewModel: ObservableObject {
+    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: String(describing: ImageLoadingViewModel.self))
+    
     @Published var image: UIImage? = nil
     @Published var isLoading: Bool = false
     
@@ -29,10 +32,8 @@ class ImageLoadingViewModel: ObservableObject {
     func getImage() async {
         if let savedImage = await manager.get(key: imageKey) {
             image = savedImage
-            print("gets saved image")
         } else {
             await downloadImage()
-            print("Downloading Images")
         }
     }
     
@@ -41,7 +42,6 @@ class ImageLoadingViewModel: ObservableObject {
         
         guard let url = URL(string: urlString) else {
             isLoading = false
-            print("A")
             return
         }
         do {
@@ -54,12 +54,11 @@ class ImageLoadingViewModel: ObservableObject {
             if let downloadedImage = UIImage(data: data) {
                 self.image = downloadedImage
                 await manager.add(key: self.imageKey, value: downloadedImage)
-                print("Image downloaded and saved")
             } else {
-                print("failed to save image")
+                Self.logger.error("failed to save image")
             }
         } catch {
-            print("Error downloading image \(error)")
+            Self.logger.error("Error downloading image \(error)")
         }
         isLoading = false
         
