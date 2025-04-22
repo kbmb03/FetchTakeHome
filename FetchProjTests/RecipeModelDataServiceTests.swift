@@ -10,7 +10,7 @@ final class RecipeModelDataServiceTests: XCTestCase {
     }
     
     override func tearDown() {
-        RecipeDataFileManager.instance.removeAllData()
+        RecipeStorageManager.instance.removeAllData()
         sut = nil
         super.tearDown()
     }
@@ -30,7 +30,7 @@ final class RecipeModelDataServiceTests: XCTestCase {
         let recipes = try await sut.downloadData()
         
         // When
-        let cachedRecipes = RecipeDataFileManager.instance.loadRecipes()
+        let cachedRecipes = RecipeStorageManager.instance.loadRecipes()
         
         // Then
         XCTAssertNotNil(cachedRecipes)

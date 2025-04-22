@@ -1,12 +1,12 @@
 import XCTest
 @testable import FetchProj
 
-final class RecipeDataFileManagerTests: XCTestCase {
-    var sut: RecipeDataFileManager!
+final class RecipeStorageManagerTests: XCTestCase {
+    var sut: RecipeStorageManager!
     
     override func setUp() {
         super.setUp()
-        sut = RecipeDataFileManager.instance
+        sut = RecipeStorageManager.instance
     }
     
     override func tearDown() {

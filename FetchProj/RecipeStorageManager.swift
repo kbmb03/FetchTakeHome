@@ -1,5 +1,5 @@
 //
-//  RecipeDataFileManager.swift
+//  RecipeStorageManager.swift
 //  FetchProj
 //
 //  Created by Kaleb Davis on 4/17/25.
@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-class RecipeDataFileManager {
+class RecipeStorageManager {
     
-    static let instance = RecipeDataFileManager()
+    static let instance = RecipeStorageManager()
     private let folderName = "recipe_data"
     private let fileName = "cached_recipes.json"
     

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeContainerView: View {
-    @StateObject var vm = DownloadingImagesViewModel()
+    @StateObject var vm = RecipeListViewModel()
     
     @ViewBuilder
     var mainContent: some View {
@@ -30,7 +30,7 @@ struct RecipeContainerView: View {
                         Button(action: {
                             Task {
                                 RecipeModelFileManager.instance.removeAllImages()
-                                RecipeDataFileManager.instance.removeAllData()
+                                RecipeStorageManager.instance.removeAllData()
                                 await vm.downloadData()
                             }
                         }) {

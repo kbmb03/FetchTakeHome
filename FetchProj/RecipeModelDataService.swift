@@ -12,7 +12,7 @@ class RecipeModelDataService {
     
     static let instance = RecipeModelDataService()
     @Published var recipeModels: [Recipe] = []
-    private let fileManager = RecipeDataFileManager.instance
+    private let fileManager = RecipeStorageManager.instance
     
     private init() {
         // Try to load cached recipes when service is initialized
